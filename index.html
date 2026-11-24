@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#091927" />
+  <meta name="description" content="WorldMatch: Match culture, food and landmarks to countries on an interactive map." />
+  <title>WorldMatch · Explore the extraordinary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="WorldMatch home"><span class="brand-mark">✦</span><span>WORLD<span class="brand-accent">MATCH</span></span></a>
+      <div class="topbar-right"><span class="topbar-tag">THE WORLD IS YOUR PLAYGROUND</span><span class="topbar-dot">●</span><button id="homeBtn" class="ghost-button hidden" type="button">↖ Main menu</button></div>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen home-screen arcade-home" aria-label="Welcome to WorldMatch">
+        <div class="arcade-sky" aria-hidden="true">
+          <span class="sky-star star-a">✦</span><span class="sky-star star-b">✧</span><span class="sky-star star-c">✦</span>
+          <span class="travel-plane">✈</span><span class="travel-route"></span><span class="sky-pin">📍</span>
+          <span class="arcade-compass">✥</span>
+        </div>
+        <div class="arcade-heading">
+          <div class="logo-globe" aria-hidden="true">🌎</div>
+          <p class="arcade-kicker">✦ A GEOGRAPHY ADVENTURE ✦</p>
+          <h1 class="arcade-logo">WORLD<span>MATCH</span></h1>
+          <p class="arcade-ribbon">⭐ Match it. Find it. Explore it! ⭐</p>
+          <h2>Ready for a world adventure?</h2>
+        </div>
+        <div class="arcade-choose"><span>✦ PICK YOUR WORLD ✦</span><span>Choose one adventure to begin</span></div>
+        <div class="category-grid arcade-categories" id="categoryGrid" role="group" aria-label="Choose your category">
+          <button type="button" class="category adventure-card food-card selected" data-category="foods" aria-pressed="true">
+            <span class="card-content"><strong>Street Food<br>Fiesta</strong><small>Match famous foods to their home countries.</small></span>
+            <img class="card-art" src="assets/food-art.webp" alt="" aria-hidden="true" />
+            <span class="category-check" aria-hidden="true">✓</span>
+          </button>
+          <button type="button" class="category adventure-card landmark-card" data-category="landmarks" aria-pressed="false">
+            <span class="card-content"><strong>Wonders of<br>the World</strong><small>Place iconic landmarks on the map.</small></span>
+            <img class="card-art" src="assets/landmark-art.webp" alt="" aria-hidden="true" />
+            <span class="category-check" aria-hidden="true">✓</span>
+          </button>
+          <button type="button" class="category adventure-card nature-card" data-category="nature" aria-pressed="false">
+            <span class="card-content"><strong>Wild Planet</strong><small>Match wildlife with the countries they belong to.</small></span>
+            <img class="card-art" src="assets/wildlife-art.webp" alt="" aria-hidden="true" />
+            <span class="category-check" aria-hidden="true">✓</span>
+          </button>
+        </div>
+        <div class="arcade-controls">
+          <div class="name-group"><label for="playerName">🧭 What should we call you, explorer?</label><input id="playerName" class="name-input" maxlength="20" placeholder="Your explorer name" autocomplete="nickname" /></div>
+          <div class="difficulty-group"><span class="difficulty-prompt">Choose your difficulty:</span>
+            <div class="difficulty-pills" role="group" aria-label="Difficulty selection">
+              <button type="button" class="difficulty-pill pill-easy selected" data-difficulty="easy" aria-pressed="true">🧭 Explorer <span>✓</span></button>
+              <button type="button" class="difficulty-pill pill-medium" data-difficulty="medium" aria-pressed="false">⛰️ Adventurer <span>✓</span></button>
+              <button type="button" class="difficulty-pill pill-hard" data-difficulty="hard" aria-pressed="false">👑 Legend <span>✓</span></button>
+            </div>
+            <label for="difficulty" class="visually-hidden">Difficulty</label>
+            <select id="difficulty" class="visually-hidden" tabindex="-1" aria-hidden="true"><option value="easy">Explorer — Easy</option><option value="medium">Adventurer — Medium</option><option value="hard">Legend — Hard</option></select>
+            <p id="difficultyInfo" class="difficulty-hint">120 sec · Labels · 3 hints per card</p>
+          </div>
+        </div>
+        <button type="button" id="startBtn" class="arcade-start">START ADVENTURE <span aria-hidden="true">✈</span></button>
+        <div class="arcade-features" aria-label="Game features"><span>🎯 45 challenges</span><span>⏱️ Timed gameplay</span><span>🏆 Achievements</span><span>⚡ Combo bonus</span><span>🗺️ Interactive world map</span></div>
+        <div class="arcade-bottom-decoration" aria-hidden="true"><span>🎒</span><span>🌎</span><span>📸</span></div>
+      </section>
+
+<section id="gameScreen" class="screen game-screen hidden" aria-label="Game">
+        <div class="game-header"><div class="game-title"><span class="eyebrow small">NOW EXPLORING</span><h2 id="gameCategoryTitle">Street Food Fiesta <span>✦</span></h2></div><div class="hud"><div class="hud-item"><small>EXPLORER</small><strong id="hudPlayer">Player</strong></div><div class="hud-item"><small>SCORE</small><strong id="hudScore">0000</strong></div><div class="hud-item timer-hud" id="timerWrap"><small>TIME LEFT</small><strong><span id="hudTime">02:00</span> <span class="timer-icon">◷</span></strong></div><div class="hud-item"><small>LIVES</small><strong id="hudLives" aria-label="3 lives">♥ ♥ ♥</strong></div></div></div>
+        <div class="progress-area"><div class="progress-description"><span id="roundText">ROUND 1 / 3</span><span id="progressText">0 OF 5 DISCOVERIES</span></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></div>
+        <div class="map-section"><div class="map-toolbar"><div class="map-pill">✦ INTERACTIVE WORLD MAP</div><div class="map-guide" id="mapGuide">Select a card, then click its country</div></div><div id="map" role="application" aria-label="Interactive country map"></div><div class="map-legend"><span><i></i> Discover a country</span><span>＋ Scroll to zoom · Drag to explore</span></div><div id="mapLoading" class="map-loading">Loading countries…</div></div>
+        <div class="cards-header"><div><div class="eyebrow small">THE COLLECTION</div><h3>Where does it belong?</h3></div><div class="cards-note" id="cardsNote">Choose a card to get started ↘</div></div>
+        <div id="itemCards" class="item-cards" aria-label="Items to match"></div>
+        <div class="bottom-actions"><button id="hintBtn" class="outline-button" type="button">✧ Hint <span>select a card first</span></button><p id="feedback" role="status" aria-live="polite">Select a card and locate its country on the map.</p></div>
+      </section>
+
+      <section id="endScreen" class="screen end-screen hidden" aria-label="Results"><div class="result-panel"><div class="result-orbit">✦ <span>✧</span> ✦</div><div class="eyebrow">YOUR JOURNEY IS COMPLETE</div><h2 id="endTitle">Excellent exploring!</h2><p id="endSubtitle">The world is full of wonders.</p><div class="final-score"><span>FINAL SCORE</span><strong id="endScore">0000</strong></div><div class="result-grid"><div><small>EXPLORER</small><strong id="endPlayer">Player</strong></div><div><small>DISCOVERIES</small><strong id="endCorrect">0 / 5</strong></div><div><small>PERSONAL BEST</small><strong id="endBest">0000</strong></div></div><div class="extra-stats"><div><small>ACCURACY</small><strong id="endAccuracy">0%</strong></div><div><small>BEST COMBO</small><strong id="endCombo">0×</strong></div></div><div class="achievements-panel"><div class="achievements-heading"><span>✦ ACHIEVEMENTS</span><span id="achievementsCount">0 / 5 unlocked</span></div><div id="achievementResults" class="achievement-results"></div></div><div id="newRecord" class="record hidden">🏆 New personal best!</div><div class="toplist"><small>TOP 5 ON THIS DEVICE</small><ol id="topList"></ol></div><div class="result-buttons"><button id="playAgainBtn" class="primary-button" type="button">PLAY AGAIN ↗</button><button id="returnHomeBtn" class="outline-button" type="button">CHANGE CATEGORY</button></div></div></section>
+    </main>
+    <div id="achievementToast" class="achievement-toast" role="status" aria-live="polite"></div>
+    <footer class="footer"><span>✦ MADE FOR CURIOUS MINDS</span><span>WORLD MATCH · GMT 458 WEB GIS</span><span>© 2026</span></footer>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -2,7 +2,16 @@
 ### 🎮 Ready for a World Adventure?
 
 
-[![PLAY THE GAME](https://img.shields.io/badge/PLAY_THE_GAME-START_ADVENTURE-brightgreen)](https://diclesahin.github.io/worldmatch/)
+
+<p align="center">
+  <a href="https://diclesahin.github.io/worldmatch/">
+    <img
+      src="https://img.shields.io/badge/PLAY%20THE%20GAME-START%20ADVENTURE!-F4C75E?style=for-the-badge"
+      alt="PLAY THE GAME — START ADVENTURE"
+      height="75"
+    />
+  </a>
+</p>
 
 **GMT 458 — Web GIS | Assignment 2: GeoGame | 2026–2027**
 
